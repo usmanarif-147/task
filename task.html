@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jstat@1.9.2/dist/jstat.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="row">
+            <div class="col-md-12">
+                <h3> Result: <span id="result">0</span> </h3>
+            </div>
+            <div class="col-md-12">
+                <h3> Timer: <span id="timer"></span> </h3>
+            </div>
+            <div class="col-md-12">
+                <button class="btn btn-outline-primary" id="btn-primary" value="8"> Light blue </button>
+                <button class="btn btn-outline-danger" id="btn-red" value="6"> Green </button>
+                <button class="btn btn-outline-secondary" id="btn-r-1" value="1">
+                    ring 1
+                </button>
+                <button class="btn btn-outline-secondary" id="btn-r-2" value="2">
+                    ring 2
+                </button>
+                <button class="btn btn-outline-secondary" id="btn-r-3" value="3">
+                    ring 3
+                </button>
+                <button class="btn btn-outline-secondary" id="btn-r-4" value="4">
+                    ring 4
+                </button>
+                <button class="btn btn-outline-secondary" id="btn-r-5" value="5">
+                    ring 5
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    // beep sound integration
+    var beep = new Audio();
+    beep.src = "beep.mp3";
+
+    //timer logic
+    var count = 120;
+    setInterval(function () {
+        if(count > -1){
+            $('#timer').text(count--)
+        }
+        else{
+            location.reload();
+        }
+    },1000);
+
+
+    // application logic
+    var arr = [];
+    var result = 0;
+    $(document).on('click','.btn',function (e) {
+        e.preventDefault();
+
+        beep.play();
+
+        alert($(this).val());
+
+        $('.btn').removeClass('bg-primary');
+        $(this).addClass('bg-primary');
+
+        arr.push($(this).val());
+        result = 0;
+        for(var i=0; i<arr.length; i++)
+        {
+            result += parseInt(arr[i]);
+        }
+        $('#result').text(result)
+    });
+
+</script>
+
+</body>
+</html>
